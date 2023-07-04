@@ -26,6 +26,7 @@ import { action, computed, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import Image from "./Image";
 import { ChangeEvent } from "react";
+import useTextColor from "@/hooks/useTextColor";
 
 const fikaData = [
   {
@@ -157,6 +158,7 @@ const FikaItemView = observer(function _FikaItemView({
   fikaItem: FikaItem;
   last?: boolean;
 }) {
+  const textColor = useTextColor();
   return (
     <Box
       borderBottomWidth={last ? "4px" : "1px"}
@@ -166,6 +168,7 @@ const FikaItemView = observer(function _FikaItemView({
       alignItems="center"
       display="flex"
       width="100%"
+      color={textColor}
     >
       <Image
         src={fikaItem.imageUrl}
@@ -174,7 +177,7 @@ const FikaItemView = observer(function _FikaItemView({
         height={40}
       />
       <Box display="flex" alignContent="flex-start" flexDir="column" ml={2}>
-        <Heading as="h4" size="lg" color="gray.600">
+        <Heading as="h4" size="lg">
           {fikaItem.name}
         </Heading>
         <Text color="gray.500">{fikaItem.price} kr/st</Text>
@@ -203,9 +206,9 @@ const FikaItemView = observer(function _FikaItemView({
 });
 
 export default observer(function Auktionsfika() {
-  const textColor = useColorModeValue("#444444", "#eeeeee");
+  const textColor = useTextColor();
   return (
-    <Box>
+    <Box color={textColor}>
       <Heading
         textAlign="center"
         as="h1"
@@ -230,9 +233,10 @@ export default observer(function Auktionsfika() {
           <Box display="flex" alignItems="center">
             <FormControl maxWidth={90}>
               <FormLabel maxWidth={90}>Totalt</FormLabel>
-              <InputGroup maxWidth={90}>
+              <InputGroup maxWidth={90} size="md">
                 <InputLeftElement>
                   <IconButton
+                    maxWidth={20}
                     variant="ghost"
                     aria-label="Rensa"
                     icon={<DeleteIcon />}
@@ -259,7 +263,7 @@ export default observer(function Auktionsfika() {
                 </InputLeftElement>
                 <Input
                   type="number"
-                  value={fika.paid === undefined ? "" : fika.paid}
+                  value={fika.paid === undefined ? "." : fika.paid}
                   onChange={fika.onChangePaid}
                 />
                 {fika.paid && (
@@ -272,13 +276,7 @@ export default observer(function Auktionsfika() {
             </FormControl>
 
             <Spacer />
-            <Heading
-              as="h2"
-              size="lg"
-              mx={4}
-              color={textColor}
-              display="inline"
-            >
+            <Heading as="h2" size="lg" mx={4} display="inline">
               {fika.totalPrice} kr
             </Heading>
           </Box>
