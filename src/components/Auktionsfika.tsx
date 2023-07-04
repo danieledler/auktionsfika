@@ -19,7 +19,6 @@ import {
   StatNumber,
   Text,
   VStack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { CloseIcon, DeleteIcon } from "@chakra-ui/icons";
 import { action, computed, makeObservable, observable } from "mobx";
